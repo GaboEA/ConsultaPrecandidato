@@ -48,7 +48,7 @@ app.get('/results', async (req, res) => {
 
   const query = `
     SELECT id_precandidato AS id, COUNT(*) AS votos
-    FROM votos
+    FROM votes
     WHERE ${dateFilter}
     GROUP BY id_precandidato
     ORDER BY id_precandidato
