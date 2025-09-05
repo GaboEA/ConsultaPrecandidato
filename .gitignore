@@ -1,0 +1,4 @@
+.img/Raw
+*.db
+results.html
+node_modules/
