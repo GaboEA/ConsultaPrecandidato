@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +13,15 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",
+    "pg": "^8.16.3",
     "sqlite3": "^5.1.7"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GaboEA/ConsultaPrecandidato.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GaboEA/ConsultaPrecandidato/issues"
+  },
+  "homepage": "https://github.com/GaboEA/ConsultaPrecandidato#readme"
 }

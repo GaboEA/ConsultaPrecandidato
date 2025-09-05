@@ -4,10 +4,14 @@ const questionSection = document.getElementById('question-section');
 const resultsSection  = document.getElementById('results-section');
 
 // Verifica si el usuario ya votó
-if (localStorage.getItem('hasVoted') === 'true') {
+const today = new Date().toISOString().slice(0, 10);
+const lastVoteDate = localStorage.getItem('lastVoteDate');
+
+if (lastVoteDate === today) {
   questionSection.classList.add('hide');
   resultsSection.classList.remove('hide');
 } else {
+  localStorage.removeItem('lastVoteDate'); // limpia si es de otro día
   questionSection.classList.remove('hide');
   resultsSection.classList.add('hide');
 }
@@ -79,7 +83,7 @@ function setupVotingButtons(chart, onVotedCallback) {
       const candidateId = btn.dataset.id;
 
       // Guarda el estado de votación
-        localStorage.setItem('hasVoted', 'true');
+        localStorage.setItem('lastVoteDate', new Date().toISOString().slice(0, 10));
 
       // Oculta la sección de preguntas y muestra resultados
       questionSection.classList.add('hide');
