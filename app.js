@@ -41,7 +41,7 @@ function initChart() {
   const ctx = document.getElementById('resultsChart').getContext('2d');
   return new Chart(ctx, {
     type: 'bar',
-    data: { labels: [], datasets: [{ label:'Votos', data:[], backgroundColor:'rgba(54,162,235,0.5)', borderColor:'rgba(54,162,235,1)', borderWidth:1 }] },
+    data: { labels: [], datasets: [{ label:'Total de apoyo', data:[], backgroundColor:'rgba(54,162,235,0.5)', borderColor:'rgba(54,162,235,1)', borderWidth:1 }] },
     options: {
       responsive: true,
       maintainAspectRatio: false,

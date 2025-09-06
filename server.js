@@ -25,7 +25,7 @@ app.post('/vote', async (req, res) => {
     // Insertar el voto
     try {
       const query = `
-        INSERT INTO votos (id_precandidato, ip_usuario, fecha_apoyo)
+        INSERT INTO votes (id_precandidato, ip_usuario, fecha_apoyo)
         VALUES ($1, $2, $3)
       `;
       await pool.query(query, [candidateId, ip, today]);
