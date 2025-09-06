@@ -73,7 +73,9 @@ app.get('/results', async (req, res) => {
     const result = await pool.query(query);
     const labels = result.rows.map(r => candidateNames[r.id] || `Persona ${r.id}`);
     const votes = result.rows.map(r => r.votos);
-    res.json({ labels, votes });
+    const totalVotos = result.rows.reduce((sum, r) => sum + parseInt(r.votos), 0);
+
+    res.json({ labels, votes, total: totalVotos });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error BD resultados' });

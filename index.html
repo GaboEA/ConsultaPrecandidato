@@ -11,6 +11,25 @@
         <div class="log-container"></div>
     </div>
     <section class="question-container" id="question-section">
+        <div class="instruc-section">
+            <div class="instruc-container">
+                <p>
+                    ¿A cuál de las siguientes precandidatos le darías tu voto para que sea el candidato presidencial del Pacto Histórico en las elecciones de 2026?
+                </p>
+                <ul>
+                    <li>
+                        <p>Es muy fácil, debajo de la foto de cada precandidato hay un botón de <img src="img/SVG-Like.svg"  alt="Like" style="width: 24px; height: 24px; vertical-align: middle;"> "me gusta", haz clic para dar el apoyo.</p> 
+                    </li>
+                    <li>
+                        <p class="small-text">Solo puedes votar una vez por día.</p>
+                    </li>
+                    <li>
+                        <p>Apoya a tú pre-candidato de tú preferencia.</p>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
         <div class="box-container">
             <div class="avatar-box">
                 <div class="row">
@@ -84,14 +103,26 @@
         </div>
     </section>
     <section class="results-container" id="results-section">
+        <div class="explica-section">
+            <div class="explica-container">
+                <p>Resultado de la participación: recuerda que puedes cambiar el periodo de tiempo para ver los resultados de la semana actual, el mes actual o el resultado conjunto total.</p>
+                <p>La contabilización de cada apoyo se realiza desde Septiembre de 2025</p>
+                <p>Cada barra representa un precandidato, con su respectiva cantidad de apoyo.</p>
+            </div>
+        </div>
         <select id="periodSelector">
             <option value="global">Global</option>
-            <option value="monthly">Mensual</option>
-            <option value="weekly">Semanal</option>
+            <option value="monthly">Mes Actual</option>
+            <option value="weekly">Semana Actual</option>
         </select>
         
         <div class="graphicBox-Container">
             <canvas id="resultsChart"></canvas>
+        </div>
+        <div class="total-votes-section">
+            <div id="totalVotesBox" class="total-votes-container">
+                <p id="totalVotesDisplay" style="font-weight: bold;">Total Participantes: 0 <p>
+            </div>
         </div>
     </section>
     <footer>

@@ -50,7 +50,6 @@ function initChart() {
   });
 }
 
-
 // 3. petición única a /results y actualizar la gráfica
 async function updateChart(chart, period) {
   try {
@@ -59,12 +58,12 @@ async function updateChart(chart, period) {
     const res  = await fetch(url);
     if (!res.ok) throw new Error(res.statusText);
 
-    const { labels, votes } = await res.json();
-    // console.log('[updateChart] Data', labels, votes);
-
+    const { labels, votes, total } = await res.json();
+    animateTotalVotes(total);
     chart.data.labels           = labels;
     chart.data.datasets[0].data = votes;
     chart.update();
+    document.getElementById('totalVotesDisplay').textContent = `Participación total: ${total}`;
 
   } catch (err) {
     console.error(err);
@@ -118,3 +117,18 @@ function setupVotingButtons(chart, onVotedCallback) {
     });
   });
 }
+
+// 5. Animar el conteo total de votos
+function animateTotalVotes(targetValue) {
+  const display = document.getElementById('totalVotesDisplay');
+  let current = 0;
+  const duration = 1000; // duración total en ms
+  const stepTime = Math.max(Math.floor(duration / targetValue), 20);
+
+  const timer = setInterval(() => {
+    current += 1;
+    display.textContent = `Total Participantes: ${current}`;
+    if (current >= targetValue) clearInterval(timer);
+  }, stepTime);
+}
+
