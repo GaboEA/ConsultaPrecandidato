@@ -101,7 +101,12 @@ function setupVotingButtons(chart, onVotedCallback) {
           return;
         }
         
-        disableButtons(buttons);
+      function disableButtons(buttons) {
+        buttons.forEach(btn => {
+        btn.disabled = true;
+        btn.classList.add('disabled');
+      });
+      }
 
         // tras insertar en el servidor, refresca la gráfica
         onVotedCallback();
