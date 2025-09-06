@@ -4,8 +4,11 @@ const { Pool } = require('pg');
 const cors = require('cors');
 const app = express();
 
+app.use(cors({
+  origin: 'https://www.encuestapactohistorico.com',
+  methods: ['GET', 'POST'],
+}));
 app.use(express.json());
-app.use(cors());           // si frontend corre en otro origen
 
 //2. conectar con BD
 const pool = new Pool({

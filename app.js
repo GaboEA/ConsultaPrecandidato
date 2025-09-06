@@ -54,8 +54,7 @@ function initChart() {
 // 3. petición única a /results y actualizar la gráfica
 async function updateChart(chart, period) {
   try {
-    const url = `http://localhost:3000/results?period=${period}`;
-    // console.log('[updateChart] Fetching', url);
+    const url = `https://api.encuestapactohistorico.com/results?period=${period}`;
 
     const res  = await fetch(url);
     if (!res.ok) throw new Error(res.statusText);
@@ -89,7 +88,7 @@ function setupVotingButtons(chart, onVotedCallback) {
       questionSection.classList.add('hide');
       resultsSection.classList.remove('hide');
 
-        const res  = await fetch('http://localhost:3000/vote', {
+        const res  = await fetch('https://api.encuestapactohistorico.com/vote', {
           method: 'POST',
           headers: { 'Content-Type':'application/json' },
           body: JSON.stringify({ candidateId })
