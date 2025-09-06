@@ -81,6 +81,20 @@ app.get('/results', async (req, res) => {
 
 });
 
+app.get('/export', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM votes ORDER BY fecha_apoyo DESC');
+    const rows = result.rows;
+
+    const header = Object.keys(rows[0]).join(',');
+    const csv = rows.map(r => Object.values(r).join(',')).join('\n');
+    res.setHeader('Content-Type', 'text/csv');
+    res.send(`${header}\n${csv}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error al exportar datos');
+  }
+});
 
 // 6. Arrancar servidor
 const PORT = process.env.PORT || 3000;
