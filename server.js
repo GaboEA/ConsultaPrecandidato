@@ -42,9 +42,9 @@ app.get('/results', async (req, res) => {
   let dateFilter = '';
 
   if (period === 'weekly') {
-    dateFilter = `EXTRACT(WEEK FROM fecha_apoyo) = EXTRACT(WEEK FROM CURRENT_DATE)`;
+    dateFilter = `EXTRACT(WEEK FROM fecha_apoyo::DATE) = EXTRACT(WEEK FROM CURRENT_DATE)`;
   } else if (period === 'monthly') {
-    dateFilter = `TO_CHAR(fecha_apoyo, 'YYYY-MM') = TO_CHAR(CURRENT_DATE, 'YYYY-MM')`;
+    dateFilter = `TO_CHAR(fecha_apoyo::DATE, 'YYYY-MM') = TO_CHAR(CURRENT_DATE, 'YYYY-MM')`;
   } else {
     dateFilter = 'TRUE';
   }
