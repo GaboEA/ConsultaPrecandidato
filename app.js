@@ -127,7 +127,7 @@ function animateTotalVotes(targetValue) {
 
   const timer = setInterval(() => {
     current += 1;
-    display.textContent = `Total Participantes: ${current}`;
+    display.textContent = `Total de apoyos: ${current}`;
     if (current >= targetValue) clearInterval(timer);
   }, stepTime);
 }
