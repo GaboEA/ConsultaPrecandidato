@@ -80,44 +80,40 @@ function setupVotingButtons(chart, onVotedCallback) {
     btn.addEventListener('click', async () => {
       const candidateId = btn.dataset.id;
 
-      // Ejecutar reCAPTCHA antes de enviar el voto
-      grecaptcha.ready(function() {
-        grecaptcha.execute('6LclgMErAAAAAL3y1xPVVTZMeHxjuES7LU5c2992', { action: 'votar' }).then(async function(token) {
-          try {
-            // Guarda el estado de votación
-            localStorage.setItem('lastVoteDate', new Date().toISOString().slice(0, 10));
+      // Guarda el estado de votación
+        localStorage.setItem('lastVoteDate', new Date().toISOString().slice(0, 10));
 
-            // Oculta sección y muestra resultados
-            questionSection.classList.add('hide');
-            resultsSection.classList.remove('hide');
+      // Oculta la sección de preguntas y muestra resultados
+      questionSection.classList.add('hide');
+      resultsSection.classList.remove('hide');
 
-            const res = await fetch('https://api.encuestapactohistorico.com/vote', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ candidateId, recaptchaToken: token })
-            });
-
-            const { success, message } = await res.json();
-
-            if (!success) {
-              alert(message || 'Error en la verificación reCAPTCHA');
-              return;
-            }
-
-            buttons.forEach(b => {
-              b.disabled = true;
-              b.classList.add('disabled');
-            });
-
-            // Refrescar gráfica
-            onVotedCallback();
-
-          } catch (err) {
-            console.error(err);
-            alert('Error al registrar tu voto.');
-          }
+        const res  = await fetch('https://api.encuestapactohistorico.com/vote', {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json' },
+          body: JSON.stringify({ candidateId })
         });
+        const { success, message } = await res.json();
+      try {
+
+        if (!success) {
+          alert(message);
+          return;
+        }
+        
+      function disableButtons(buttons) {
+        buttons.forEach(btn => {
+        btn.disabled = true;
+        btn.classList.add('disabled');
       });
+      }
+
+        // tras insertar en el servidor, refresca la gráfica
+        onVotedCallback();
+
+      } catch (err) {
+        console.error(err);
+        alert('Error al registrar tu voto.');
+      }
     });
   });
 }

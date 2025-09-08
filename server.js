@@ -18,34 +18,23 @@ const pool = new Pool({
 
 // 4. Endpoint POST /vote
 app.post('/vote', async (req, res) => {
-  const { candidateId, recaptchaToken } = req.body;
-  const ip = req.ip.replace(/::ffff:/, '');
-  const today = new Date().toISOString().slice(0, 10);
+  const candidateId = req.body.candidateId;
+  const ip = req.ip.replace(/::ffff:/, '');   // atenúa IPv4 en proxy
+  const today = new Date().toISOString().slice(0,10);
 
-  try {
-    // 1. Verificar token con Google
-    const verifyURL = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET}&response=${recaptchaToken}`;
-    const googleRes = await fetch(verifyURL, { method: 'POST' });
-    const data = await googleRes.json();
-
-    if (!data.success) {
-      return res.status(400).json({ success: false, message: 'Fallo en verificación reCAPTCHA' });
+    // Insertar el voto
+    try {
+      const query = `
+        INSERT INTO votes (id_precandidato, ip_usuario, fecha_apoyo)
+        VALUES ($1, $2, $3)
+      `;
+      await pool.query(query, [candidateId, ip, today]);
+      res.json({ success: true });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ success: false, message: 'Error al guardar voto' });
     }
-
-    // 2. Insertar el voto si el reCAPTCHA es válido
-    const query = `
-      INSERT INTO votes (id_precandidato, ip_usuario, fecha_apoyo)
-      VALUES ($1, $2, $3)
-    `;
-    await pool.query(query, [candidateId, ip, today]);
-
-    res.json({ success: true });
-
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: 'Error al guardar voto' });
-  }
-});
+  });
 
 // 5. Endpoint GET /results?period=weekly&week=1
 app.get('/results', async (req, res) => {
