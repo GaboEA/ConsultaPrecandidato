@@ -63,9 +63,11 @@
 }
 
 .row {
-    display: flex;
-    justify-content: space-between;
-    gap: 8em;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 2em 5em;
+    /* justify-content: space-between; */
 }
 
 .avatar-container {
@@ -81,6 +83,7 @@
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-weight: bold;
     color: #333;
+    cursor: default;
 }
 
 .avatar-container button {
@@ -101,6 +104,8 @@
 
 .avatar-container:hover img{
     animation: colorfulIn 1s;
+    transform: scale(1.01);
+    transition: transform 1s ease-in-out;
 }
 
 .avatar-container:hover img{
@@ -382,9 +387,9 @@
         max-width: 100vh;
         gap: 10px;
     }
-    .avatar-box > * {
+    /* .avatar-box > * {
         max-width: 80%;
-    }
+    } */
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
@@ -508,11 +513,9 @@
     .row {
         width: 300px;
         display: grid;
-        flex-wrap: wrap;
-        grid-template-columns: max-content max-content;
-        justify-content: space-evenly;
-        align-content: space-between;
-        gap: 1em;
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: center;
+        grid-gap: 1em;
     }
 
     .last-avatar{
