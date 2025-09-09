@@ -103,7 +103,7 @@ function setupVotingButtons(chart, onVotedCallback) {
         resultsSection.classList.remove('hide');
         voteRest =(numBase - voteData.count);
         console.log(voteRest);
-        alert('Cantidad de votos diaríos restantes: ' + voteRest);
+        alert(`Cantidad de votos diarios restantes: ${voteRest}`);
       }
 
         const res  = await fetch('https://api.encuestapactohistorico.com/vote', {
