@@ -97,8 +97,13 @@ function setupVotingButtons(chart, onVotedCallback) {
 
       if(voteData.count <3)
       {
+        voteData.count += 1;
+        localStorage.setItem('voteData', JSON.stringify(voteData));
         questionSection.classList.add('hide');
         resultsSection.classList.remove('hide');
+        voteRest =(numBase - voteData.count);
+        console.log(voteRest);
+        alert('Cantidad de votos diaríos restantes: ' + voteRest);
       }
 
         const res  = await fetch('https://api.encuestapactohistorico.com/vote', {
@@ -109,14 +114,7 @@ function setupVotingButtons(chart, onVotedCallback) {
         const { success, message } = await res.json();
       try {
 
-        if(success)
-        {
-          voteData.count += 1;
-          localStorage.setItem('voteData', JSON.stringify(voteData));
-          voteRest =(numBase - voteData.count);
-          console.log(voteRest);
-          alert('Cantidad de votos diarios restantes: ${voteRest}');
-        }else{
+        if (!success) {
           alert(message);
           return;
         }
