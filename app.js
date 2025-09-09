@@ -3,15 +3,19 @@ console.log('Página cargada:', Date.now());
 const questionSection = document.getElementById('question-section');
 const resultsSection  = document.getElementById('results-section');
 
-// Verifica si el usuario ya votó
+// verificación de votos
+const voteData = JSON.parse(localStorage.getItem('voteData')) || {};
 const today = new Date().toISOString().slice(0, 10);
-const lastVoteDate = localStorage.getItem('lastVoteDate');
 
-if (lastVoteDate === today) {
+if(voteData.date !== today)
+{
+    localStorage.removeItem('voteData'); // limpieza diaría
+}
+
+if (voteData.date === today && voteData.count >= 3) {
   questionSection.classList.add('hide');
   resultsSection.classList.remove('hide');
 } else {
-  localStorage.removeItem('lastVoteDate'); // limpia si es de otro día
   questionSection.classList.remove('hide');
   resultsSection.classList.add('hide');
 }
@@ -80,12 +84,22 @@ function setupVotingButtons(chart, onVotedCallback) {
     btn.addEventListener('click', async () => {
       const candidateId = btn.dataset.id;
 
-      // Guarda el estado de votación
-        localStorage.setItem('lastVoteDate', new Date().toISOString().slice(0, 10));
+      // Guardar estado de votación
+      const voteData = JSON.parse(localStorage.getItem('voteData')) || {};
+      const today = new Date().toISOString().slice(0, 10);
+      const numBase = 3;
+      var voteRest = 0;
 
-      // Oculta la sección de preguntas y muestra resultados
-      questionSection.classList.add('hide');
-      resultsSection.classList.remove('hide');
+      if (voteData.date !== today) {
+        voteData.date = today;
+        voteData.count = 0;
+      }
+
+      if(voteData.count <3)
+      {
+        questionSection.classList.add('hide');
+        resultsSection.classList.remove('hide');
+      }
 
         const res  = await fetch('https://api.encuestapactohistorico.com/vote', {
           method: 'POST',
@@ -95,7 +109,14 @@ function setupVotingButtons(chart, onVotedCallback) {
         const { success, message } = await res.json();
       try {
 
-        if (!success) {
+        if(success)
+        {
+          voteData.count += 1;
+          localStorage.setItem('voteData', JSON.stringify(voteData));
+          voteRest =(numBase - voteData.count);
+          console.log(voteRest);
+          alert('Cantidad de votos diarios restantes: ${voteRest}');
+        }else{
           alert(message);
           return;
         }
