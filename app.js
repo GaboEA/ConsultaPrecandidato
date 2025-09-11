@@ -152,18 +152,34 @@ function animateTotalVotes(targetValue) {
 }
 
 // 6. Abrir Popup
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 const shareBtn = document.getElementById('share-button');
 const popup = document.getElementById('share-popup');
 
-shareBtn.addEventListener('click', () => {
-  popup.classList.toggle('hidden-btn');
-  popup.classList.remove('hidden-btn');
-});
+// Modo móvil con Web Share API
+if (isMobile && navigator.share) {
+  shareBtn.addEventListener('click', () => {
+    navigator.share({
+      title: 'Encuesta Pacto Histórico',
+      text: 'Participa en esta encuesta',
+      url: 'https://www.encuestapactohistorico.com'
+    }).catch((err) => {
+      console.error('Error al compartir:', err);
+    });
+  });
 
-// Opcional: cerrar si se hace clic fuera
-document.addEventListener('click', (e) => {
-  if (!shareBtn.contains(e.target) && !popup.contains(e.target)) {
-    popup.classList.add('hidden-btn');
+  if (popup) {
+    popup.style.display = 'none';
   }
-});
+}else {
+  shareBtn.addEventListener('click', () => {
+    popup.classList.toggle('hidden-btn');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!shareBtn.contains(e.target) && !popup.contains(e.target)) {
+      popup.classList.add('hidden-btn');
+    }
+  });
+}
 
