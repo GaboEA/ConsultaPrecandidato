@@ -2,3 +2,4 @@
 *.db
 results.html
 node_modules/
+raw/
