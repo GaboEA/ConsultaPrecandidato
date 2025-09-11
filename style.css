@@ -15,12 +15,43 @@
 .header-container {
     width: 100%;
     height: 50px;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     background-color: #e0e5f2;
     padding: 20px 0 20px 0;
     display: flex;
     justify-content: center;
     gap: 6em;
+}
+
+.navigator-container{
+    height: 2em;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 2em;
+    padding-right: 2em;
+    margin-bottom: 20px;
+    background-image:  radial-gradient(#1C3587 0.5px, transparent 0.5px), radial-gradient(#1C3587 0.5px, #e0e5f2 0.5px);
+    background-size: 20px 20px;
+    background-position: 0 0,10px 10px;
+    background-color: #e0e5f2;
+}
+
+.pagNext{
+    height: max-content;
+    display: flex;
+    align-items: center;
+}
+
+.pagNext a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.pagNext a:hover{
+    filter: drop-shadow(1px 1px 1px #302c2c);
+    transform: scale(1.2);
+    transition: scale 2s ease-in;
 }
 
 .log-container {
