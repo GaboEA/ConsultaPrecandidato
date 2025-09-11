@@ -274,6 +274,60 @@
     text-align: center;
 }
 
+.share-container {
+  position: relative;
+  display: inline-block;
+  justify-content: center;
+}
+
+.share-box
+{
+    display: flex;
+    justify-content: center;
+}
+
+
+.share-box img{
+    width: 32px;
+    height: 32px;
+    scale: 1;
+}
+
+.share-box img:hover{
+    transform: scale(1.2);
+    filter: brightness(0.7);
+    filter: drop-shadow(1px 1px 2px #302f2f);
+    transition: transform 0.2s ease-in;
+    cursor: pointer;
+}
+
+.shareimg{
+    margin-bottom: 2em;
+}
+
+.popup{
+    position: absolute;
+    top: -30%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #212632ef;
+    border-radius: 6px;
+    padding: 10px;
+    z-index: 100;
+    width: max-content;
+    height: max-content;
+    display: flex;
+    gap: 2em;
+    }
+
+.popup a {
+  text-decoration: none;
+}
+
+.hidden-btn {
+  display: none;
+}
+
 /* efectos */
 @keyframes rumble {
   0%   { transform: rotate(0deg) scale(1.0); }

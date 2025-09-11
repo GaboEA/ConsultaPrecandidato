@@ -151,3 +151,19 @@ function animateTotalVotes(targetValue) {
   }, stepTime);
 }
 
+// 6. Abrir Popup
+const shareBtn = document.getElementById('share-button');
+const popup = document.getElementById('share-popup');
+
+shareBtn.addEventListener('click', () => {
+  popup.classList.toggle('hidden-btn');
+  popup.classList.remove('hidden-btn');
+});
+
+// Opcional: cerrar si se hace clic fuera
+document.addEventListener('click', (e) => {
+  if (!shareBtn.contains(e.target) && !popup.contains(e.target)) {
+    popup.classList.add('hidden-btn');
+  }
+});
+
