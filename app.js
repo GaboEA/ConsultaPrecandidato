@@ -55,10 +55,15 @@ function initChart() {
 }
 
 // 3. petición única a /results y actualizar la gráfica
+const isCamaraPage = window.location.pathname.includes('camara');
+
+const resultsEndpoint = isCamaraPage
+  ? 'https://api.encuestapactohistorico.com/results/camara'
+  : 'https://api.encuestapactohistorico.com/results';
+
 async function updateChart(chart, period) {
   try {
-    const url = `https://api.encuestapactohistorico.com/results?period=${period}`;
-
+    const url = `${resultsEndpoint}?period=${period}`;
     const res  = await fetch(url);
     if (!res.ok) throw new Error(res.statusText);
 
@@ -68,13 +73,11 @@ async function updateChart(chart, period) {
     chart.data.datasets[0].data = votes;
     chart.update();
     document.getElementById('totalVotesDisplay').textContent = `Participación total: ${total}`;
-
   } catch (err) {
     console.error(err);
     alert('No se pudieron cargar los resultados. Revisa la consola.');
   }
 }
-
 
 // 4. Recibe un callback para recargar la gráfica
 function setupVotingButtons(chart, onVotedCallback) {
@@ -106,11 +109,16 @@ function setupVotingButtons(chart, onVotedCallback) {
         alert(`Cantidad de votos diarios restantes: ${voteRest}`);
       }
 
-        const res  = await fetch('https://api.encuestapactohistorico.com/vote', {
-          method: 'POST',
-          headers: { 'Content-Type':'application/json' },
-          body: JSON.stringify({ candidateId })
-        });
+      const voteEndpoint = isCamaraPage
+        ? 'https://api.encuestapactohistorico.com/vote/camara'
+        : 'https://api.encuestapactohistorico.com/vote';
+
+      const res = await fetch(voteEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json' },
+        body: JSON.stringify({ candidateId })
+      });
+      
         const { success, message } = await res.json();
       try {
 

@@ -36,6 +36,25 @@ app.post('/vote', async (req, res) => {
     }
   });
 
+//4.5 Endpoint POST /vote/camara
+app.post('/vote/camara', async (req, res) => {
+  const candidateId = req.body.candidateId;
+  const ip = req.ip.replace(/::ffff:/, '');
+  const today = new Date().toISOString().slice(0, 10);
+
+  try {
+    const query = `
+      INSERT INTO votes_camara (id_candidato, ip_usuario, fecha_apoyo)
+      VALUES ($1, $2, $3)
+    `;
+    await pool.query(query, [candidateId, ip, today]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Error al guardar voto de Cámara' });
+  }
+});
+
 // 5. Endpoint GET /results?period=weekly&week=1
 app.get('/results', async (req, res) => {
   const { period } = req.query;
@@ -81,6 +100,56 @@ app.get('/results', async (req, res) => {
     res.status(500).json({ message: 'Error BD resultados' });
   }
 
+});
+
+//5.1 GET /results/camera
+app.get('/results/camara', async (req, res) => {
+  const { period } = req.query;
+  let dateFilter = '';
+
+  if (period === 'weekly') {
+    dateFilter = `EXTRACT(WEEK FROM fecha_apoyo::DATE) = EXTRACT(WEEK FROM CURRENT_DATE)`;
+  } else if (period === 'monthly') {
+    dateFilter = `TO_CHAR(fecha_apoyo::DATE, 'YYYY-MM') = TO_CHAR(CURRENT_DATE, 'YYYY-MM')`;
+  } else {
+    dateFilter = 'TRUE';
+  }
+
+  const query = `
+    SELECT id_candidato AS id, COUNT(*) AS votos
+    FROM votes_camara
+    WHERE ${dateFilter}
+    GROUP BY id_candidato
+    ORDER BY id_candidato
+  `;
+
+  const candidateNames = {
+    1: 'Gabriel Becerra',
+    2: 'Laura Daniela Beltrán',
+    3: 'Maria Fernanda Carrascal',
+    4: 'Ana Erazo',
+    5: 'Heiner Gaitán',
+    6: 'Julio César González',
+    7: 'Alfredo Mondragón',
+    8: 'Daniel Monrroy',
+    9: 'Hernán Muriel Pérez',
+    10: 'Maria del Pilar Pizarro',
+    11: 'Jaime Santamaría',
+    12: 'Alejandro Toro',
+    13: 'Isabel Vera'
+  };
+
+  try {
+    const result = await pool.query(query);
+    const labels = result.rows.map(r => candidateNames[r.id] || `Candidato ${r.id}`);
+    const votes = result.rows.map(r => r.votos);
+    const totalVotos = result.rows.reduce((sum, r) => sum + parseInt(r.votos), 0);
+
+    res.json({ labels, votes, total: totalVotos });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error BD resultados Cámara' });
+  }
 });
 
 app.get('/export', async (req, res) => {
