@@ -70,6 +70,14 @@
     background-size: contain;
 }
 
+.log-cam{
+    max-width: 350px;
+    width: 100%;
+    height: 100%;
+    background: url('/img/camara.png') no-repeat center;
+    background-size: contain;
+}
+
 .box-container {
     width: 100%;
     height: 100%;
@@ -388,6 +396,39 @@
     100% { border-color:#A52E94; }
 }
 
+/* Página Cámara de reperesentantes */
+
+.camara-page{
+    background-color: #ECF2E1;
+}
+
+.camara-pageDark{
+    background-color: #c2df8d;
+}
+
+.cam-BGPS{
+    background-image:  radial-gradient(#6a871c 0.5px, transparent 0.5px), radial-gradient(#6a871c 0.5px, #c2df8d 0.5px);
+    border:1px solid #839c43;
+}
+
+.cam-BGPW{
+    background-image:  radial-gradient(#6a871c 0.5px, transparent 0.5px), radial-gradient(#6a871c 0.5px, #c2df8d 0.5px);
+}
+
+.cam-BGPSDiv div{
+    background-image:  radial-gradient(#6a871c 0.5px, transparent 0.5px), radial-gradient(#6a871c 0.5px, #c2df8d 0.5px);
+    border:1px solid #839c43;
+}
+
+.overlay-cam img{
+    border:2px solid #839c43;
+}
+
+.last-camara{
+    grid-column: span 3;
+    justify-self: center;
+}
+
 /* media query */
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -592,6 +633,10 @@
     }
 
     .log-pres{
+        max-width: 150px;
+    }
+
+    .log-cam{
         max-width: 150px;
     }
 
