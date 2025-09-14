@@ -266,13 +266,43 @@ const popup = document.getElementById('share-popup');
 // Modo móvil con Web Share API
 if (isMobile && navigator.share) {
   shareBtn.addEventListener('click', () => {
-    navigator.share({
-      title: 'Encuesta Pacto Histórico',
-      text: 'Participa en esta encuesta',
-      url: 'https://www.encuestapactohistorico.com'
-    }).catch((err) => {
-      console.error('Error al compartir:', err);
-    });
+    
+    switch (voteType){
+      case 'presidencia':
+        navigator.share({
+        title: 'Encuesta Pacto Histórico',
+        text: 'Encuesta candidato presidencial',
+        url: 'https://www.encuestapactohistorico.com'
+      }).catch((err) => {
+        console.error('Error al compartir:', err);
+      })
+      break;
+      case 'camara':
+        navigator.share({
+        title: 'Encuesta Pacto Histórico',
+        text: 'Candidatos Cámara de representantes',
+        url: 'https://www.encuestapactohistorico.com/camara.html'
+      }).catch((err) => {
+        console.error('Error al compartir:', err);
+      })
+      break;
+      case 'senado':
+        navigator.share({
+        title: 'Encuesta Pacto Histórico',
+        text: 'Candidatos para Senado',
+        url: 'https://www.encuestapactohistorico.com/camara.html'
+      }).catch((err) => {
+        console.error('Error al compartir:', err);
+      })
+      break;
+    }
+    // navigator.share({
+    //   title: 'Encuesta Pacto Histórico',
+    //   text: 'Participa en esta encuesta',
+    //   url: 'https://www.encuestapactohistorico.com'
+    // }).catch((err) => {
+    //   console.error('Error al compartir:', err);
+    // });
   });
 
   if (popup) {
