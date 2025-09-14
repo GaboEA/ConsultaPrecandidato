@@ -3,21 +3,66 @@ console.log('Página cargada:', Date.now());
 const questionSection = document.getElementById('question-section');
 const resultsSection  = document.getElementById('results-section');
 
+//detectar ubicación
+const path = window.location.pathname;
+const isCamaraPage = path.includes('camara');
+const isSenadoPage = path.includes('senado');
+const voteType = isCamaraPage
+  ? 'camara'
+  : isSenadoPage
+    ? 'senado'
+    : 'presidencia';
+console.log(voteType);
+
 // verificación de votos
 const voteData = JSON.parse(localStorage.getItem('voteData')) || {};
+const voteDataC = JSON.parse(localStorage.getItem('voteDataC')) || {};
+const voteDataS= JSON.parse(localStorage.getItem('voteDataS')) || {};
 const today = new Date().toISOString().slice(0, 10);
 
-if(voteData.date !== today)
-{
-    localStorage.removeItem('voteData'); // limpieza diaría
-}
-
-if (voteData.date === today && voteData.count >= 3) {
-  questionSection.classList.add('hide');
-  resultsSection.classList.remove('hide');
-} else {
-  questionSection.classList.remove('hide');
-  resultsSection.classList.add('hide');
+switch(voteType){
+  case 'presidencia':
+    if(voteData.date !== today)
+    {
+        localStorage.removeItem('voteData'); // limpieza diaría
+    }
+    
+    if (voteData.date === today && voteData.count >= 3) {
+      questionSection.classList.add('hide');
+      resultsSection.classList.remove('hide');
+    } else {
+      questionSection.classList.remove('hide');
+      resultsSection.classList.add('hide');
+    }
+    break;
+  case 'camara':
+    if(voteDataC.date !== today)
+    {
+        localStorage.removeItem('voteDataC');
+    }
+    
+    if (voteDataC.date === today && voteDataC.count >= 3) {
+      questionSection.classList.add('hide');
+      resultsSection.classList.remove('hide');
+    } else {
+      questionSection.classList.remove('hide');
+      resultsSection.classList.add('hide');
+    }
+    break;
+  case 'senado':
+    if(voteDataS.date !== today)
+    {
+        localStorage.removeItem('voteDataS');
+    };
+    
+    if (voteDataS.date === today && voteDataS.count >= 3) {
+      questionSection.classList.add('hide');
+      resultsSection.classList.remove('hide');
+    } else {
+      questionSection.classList.remove('hide');
+      resultsSection.classList.add('hide');
+    }
+    break;
 }
 
 // 1. DOMContentLoaded: espera a que el DOM esté listo
@@ -55,9 +100,6 @@ function initChart() {
 }
 
 // 3. petición única a /results y actualizar la gráfica
-const path = window.location.pathname;
-const isCamaraPage = path.includes('camara');
-const isSenadoPage = path.includes('senado');
 
 const resultsEndpoint = isCamaraPage
   ? 'https://api.encuestapactohistorico.com/results/camara'
@@ -93,25 +135,76 @@ function setupVotingButtons(chart, onVotedCallback) {
 
       // Guardar estado de votación
       const voteData = JSON.parse(localStorage.getItem('voteData')) || {};
+      const voteDataC = JSON.parse(localStorage.getItem('voteDataC')) || {};
+      const voteDataS= JSON.parse(localStorage.getItem('voteDataS')) || {};
       const today = new Date().toISOString().slice(0, 10);
       const numBase = 3;
       var voteRest = 0;
 
-      if (voteData.date !== today) {
-        voteData.date = today;
-        voteData.count = 0;
-      }
+      switch (voteType){
+        case 'presidencia':
+          if (voteData.date !== today) {
+            voteData.date = today;
+            voteData.count = 0;
+            voteData.type = voteType;
+          }
 
-      if(voteData.count <3)
-      {
-        voteData.count += 1;
-        localStorage.setItem('voteData', JSON.stringify(voteData));
-        questionSection.classList.add('hide');
-        resultsSection.classList.remove('hide');
-        voteRest =(numBase - voteData.count);
-        console.log(voteRest);
-        alert(`Cantidad de votos diarios restantes: ${voteRest}`);
+          if(voteData.count <3)
+          {
+            voteData.count += 1;
+            localStorage.setItem('voteData', JSON.stringify(voteData));
+            questionSection.classList.add('hide');
+            resultsSection.classList.remove('hide');
+            voteRest =(numBase - voteData.count);
+            console.log(voteRest);
+            alert(`Cantidad de votos diarios restantes: ${voteRest}`);
+          }
+          break;
+        case 'camara':
+          if (voteDataC.date !== today) {
+            voteDataC.date = today;
+            voteDataC.count = 0;
+            voteDataC.type = voteType;
+          };
+
+          if(voteDataC.count <3){
+            voteDataC.count += 1;
+            localStorage.setItem('voteDataC', JSON.stringify(voteDataC));
+            questionSection.classList.add('hide');
+            resultsSection.classList.remove('hide');
+            voteRest =(numBase - voteDataC.count);
+            console.log(voteRest);
+            alert(`Cantidad de votos diarios restantes: ${voteRest}`);
+          }
+          break;
+        case 'senado':
+          if (voteDataS.date !== today) {
+            voteDataS.date = today;
+            voteDataS.count = 0;
+            voteDataS.type = voteType;
+          };
+
+          if(voteDataS.count <3){
+            voteDataS.count += 1;
+            localStorage.setItem('voteDataS', JSON.stringify(voteDataS));
+            questionSection.classList.add('hide');
+            resultsSection.classList.remove('hide');
+            voteRest =(numBase - voteDataS.count);
+            console.log(voteRest);
+            alert(`Cantidad de votos diarios restantes: ${voteRest}`);
+          }
+          break;
       }
+      // if(voteData.count <3)
+      // {
+      //   voteData.count += 1;
+      //   localStorage.setItem('voteData', JSON.stringify(voteData));
+      //   questionSection.classList.add('hide');
+      //   resultsSection.classList.remove('hide');
+      //   voteRest =(numBase - voteData.count);
+      //   console.log(voteRest);
+      //   alert(`Cantidad de votos diarios restantes: ${voteRest}`);
+      // }
 
       const voteEndpoint = isCamaraPage
       ? 'https://api.encuestapactohistorico.com/vote/camara'
