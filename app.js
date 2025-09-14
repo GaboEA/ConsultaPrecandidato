@@ -290,7 +290,7 @@ if (isMobile && navigator.share) {
         navigator.share({
         title: 'Encuesta Pacto Histórico',
         text: 'Candidatos para Senado',
-        url: 'https://www.encuestapactohistorico.com/camara.html'
+        url: 'https://www.encuestapactohistorico.com/senado.html'
       }).catch((err) => {
         console.error('Error al compartir:', err);
       })
