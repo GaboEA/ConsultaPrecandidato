@@ -55,11 +55,15 @@ function initChart() {
 }
 
 // 3. petición única a /results y actualizar la gráfica
-const isCamaraPage = window.location.pathname.includes('camara');
+const path = window.location.pathname;
+const isCamaraPage = path.includes('camara');
+const isSenadoPage = path.includes('senado');
 
 const resultsEndpoint = isCamaraPage
   ? 'https://api.encuestapactohistorico.com/results/camara'
-  : 'https://api.encuestapactohistorico.com/results';
+  : isSenadoPage
+    ? 'https://api.encuestapactohistorico.com/results/senado'
+    : 'https://api.encuestapactohistorico.com/results';
 
 async function updateChart(chart, period) {
   try {
@@ -110,8 +114,10 @@ function setupVotingButtons(chart, onVotedCallback) {
       }
 
       const voteEndpoint = isCamaraPage
-        ? 'https://api.encuestapactohistorico.com/vote/camara'
-        : 'https://api.encuestapactohistorico.com/vote';
+      ? 'https://api.encuestapactohistorico.com/vote/camara'
+      : isSenadoPage
+      ? 'https://api.encuestapactohistorico.com/vote/senado'
+      : 'https://api.encuestapactohistorico.com/vote';
 
       const res = await fetch(voteEndpoint, {
         method: 'POST',
