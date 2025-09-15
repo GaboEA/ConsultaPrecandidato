@@ -134,7 +134,7 @@
 }
 
 .avatar-container {
-    width: 120px;
+    /* width: 120px; */
     height: max-content;
 }
 
@@ -391,6 +391,46 @@
   display: none;
 }
 
+.contact-container{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2em;
+}
+
+.contact-container p{
+    text-align: justify;
+}
+
+.contact-box{
+    width: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-image: radial-gradient(#1C3587 0.5px, transparent 0.5px), radial-gradient(#1C3587 0.5px, #e0e5f2 0.5px);
+    background-size: 20px 20px;
+    background-position: 0 0,10px 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 0 1em 0 1em;
+    margin: 1em 2em 0 2em;
+}
+
+.contact-imgContainer{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 1em;
+}
+
+.contact-img{
+    width: 64px;
+    height: 64px;
+}
+
+.contact-img:hover{
+    filter: brightness(0.8) drop-shadow(1px 1px 1px #56545499);
+    transform: scale(1.2);
+}
+
 /* efectos */
 @keyframes rumble {
   0%   { transform: rotate(0deg) scale(1.0); }
@@ -439,6 +479,7 @@
 .last-camara{
     grid-column: span 3;
     justify-self: center;
+    max-width: 120px;
 }
 
 /* Página Senado*/
@@ -568,6 +609,7 @@
     /* .avatar-box > * {
         max-width: 80%;
     } */
+
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
@@ -644,7 +686,6 @@
     .explica-container div{
         max-width: 300px;
     }
-
 
 }
 
@@ -735,4 +776,5 @@
     .explica-container div{
         max-width: 300px;
     }
+
 }
