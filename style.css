@@ -329,6 +329,30 @@
     color: #333;
 }
 
+.refresh-section{
+    display: flex;
+    justify-content: center;
+}
+
+.refresh-button{
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+    color: #302c2c;
+}
+
+.refresh-button:hover{
+    color: #615959;
+    transform: scale(1.1);
+}
+
+.refresh-button img{
+    width: 32px;
+    height: 32px;
+} 
+
 .nota{
     font-size: 8px;
     font-style: italic;
@@ -365,7 +389,8 @@
 }
 
 .shareimg{
-    margin-bottom: 2em;
+    margin: 2em;
+    
 }
 
 .popup{

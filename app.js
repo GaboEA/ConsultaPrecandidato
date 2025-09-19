@@ -2,6 +2,8 @@ console.log('Página cargada:', Date.now());
 
 const questionSection = document.getElementById('question-section');
 const resultsSection  = document.getElementById('results-section');
+const refreshSection = document.getElementById('refresh-sectionID');
+const refreshPage = document.getElementById('refreshButton');
 
 //detectar ubicación
 const path = window.location.pathname;
@@ -28,11 +30,9 @@ switch(voteType){
     }
     
     if (voteData.date === today && voteData.count >= 3) {
-      questionSection.classList.add('hide');
-      resultsSection.classList.remove('hide');
+      toggleSection(2);
     } else {
-      questionSection.classList.remove('hide');
-      resultsSection.classList.add('hide');
+      toggleSection(1);
     }
     break;
   case 'camara':
@@ -42,11 +42,9 @@ switch(voteType){
     }
     
     if (voteDataC.date === today && voteDataC.count >= 3) {
-      questionSection.classList.add('hide');
-      resultsSection.classList.remove('hide');
+      toggleSection(2);
     } else {
-      questionSection.classList.remove('hide');
-      resultsSection.classList.add('hide');
+      toggleSection(1);
     }
     break;
   case 'senado':
@@ -56,11 +54,9 @@ switch(voteType){
     };
     
     if (voteDataS.date === today && voteDataS.count >= 3) {
-      questionSection.classList.add('hide');
-      resultsSection.classList.remove('hide');
+      toggleSection(2);
     } else {
-      questionSection.classList.remove('hide');
-      resultsSection.classList.add('hide');
+      toggleSection(1);
     }
     break;
 }
@@ -153,8 +149,7 @@ function setupVotingButtons(chart, onVotedCallback) {
           {
             voteData.count += 1;
             localStorage.setItem('voteData', JSON.stringify(voteData));
-            questionSection.classList.add('hide');
-            resultsSection.classList.remove('hide');
+            toggleSection(0);
             voteRest =(numBase - voteData.count);
             console.log(voteRest);
             alert(`Cantidad de votos diarios restantes: ${voteRest}`);
@@ -170,8 +165,7 @@ function setupVotingButtons(chart, onVotedCallback) {
           if(voteDataC.count <3){
             voteDataC.count += 1;
             localStorage.setItem('voteDataC', JSON.stringify(voteDataC));
-            questionSection.classList.add('hide');
-            resultsSection.classList.remove('hide');
+            toggleSection(0);
             voteRest =(numBase - voteDataC.count);
             console.log(voteRest);
             alert(`Cantidad de votos diarios restantes: ${voteRest}`);
@@ -187,8 +181,7 @@ function setupVotingButtons(chart, onVotedCallback) {
           if(voteDataS.count <3){
             voteDataS.count += 1;
             localStorage.setItem('voteDataS', JSON.stringify(voteDataS));
-            questionSection.classList.add('hide');
-            resultsSection.classList.remove('hide');
+            toggleSection(0);
             voteRest =(numBase - voteDataS.count);
             console.log(voteRest);
             alert(`Cantidad de votos diarios restantes: ${voteRest}`);
@@ -320,3 +313,28 @@ if (isMobile && navigator.share) {
   });
 }
 
+// 7. Botón de refrescar para votar de nuevo
+refreshPage.addEventListener('click', () => {
+  location.reload();
+});
+
+//función para mostrar o esconder sección
+function toggleSection(insert){
+  switch(insert){
+    case 0:
+      questionSection.classList.add('hide');
+      resultsSection.classList.remove('hide');
+      refreshSection.classList.remove('hide');
+      break;
+    case 1:
+      questionSection.classList.remove('hide');
+      resultsSection.classList.add('hide');
+      refreshSection.classList.add('hide');
+      break;
+    case 2:
+      questionSection.classList.add('hide');
+      refreshSection.classList.add('hide');
+      resultsSection.classList.remove('hide');
+      break;
+  }
+}
