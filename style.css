@@ -262,7 +262,7 @@
 }
 
 .instruc-container{
-    max-width: 600px;
+    max-width: 120vh;
     padding: 0 1em 0 1em;
 }
 
@@ -684,6 +684,7 @@
     .avatar-box {
         /* max-width: 90vw; */
         gap: 10px;
+        margin: 0 1em 1em 1em;
     }
     /* .avatar-box > * {
         max-width: 85vw;
@@ -696,7 +697,7 @@
     
     .instruc-container{
         margin-top: 1em;
-        max-width: 530px;
+        /* max-width: 100vh; */
     }
 
     .instruc-container div{
