@@ -804,3 +804,14 @@
     }
 
 }
+
+@media (max-height: 450px){
+    .row{
+        grid-gap: 1em 3em;
+    }
+}
+@media (max-height: 300px) {
+    .row{
+        grid-gap: 1em 2em;
+    }
+}
