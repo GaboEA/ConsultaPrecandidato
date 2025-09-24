@@ -504,7 +504,7 @@
 .last-camara{
     grid-column: span 3;
     justify-self: center;
-    max-width: 120px;
+    max-width: 25vh;
 }
 
 /* Página Senado*/
@@ -712,6 +712,10 @@
     .explica-container div{
         max-width: 300px;
     }
+
+    .last-camara{
+    max-width: 20vh;
+}
 
 }
 
