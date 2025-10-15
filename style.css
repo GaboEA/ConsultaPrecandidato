@@ -38,18 +38,23 @@
 }
 
 .pagNext{
-    height: max-content;
+    height: 20px;
     display: flex;
     align-items: center;
+    border-style: groove;
+    border-bottom: none;
+    border-top: none;
+
 }
 
 .pagNext a{
     text-decoration: none;
     color: inherit;
+    padding: 0 0.5em 0 0.5em;
 }
 
 .pagNext a:hover{
-    filter: drop-shadow(1px 1px 1px #302c2c);
+    /* filter: drop-shadow(1px 1px 1px #302c2c); */
     transform: scale(1.2);
     transition: scale 2s ease-in;
 }
