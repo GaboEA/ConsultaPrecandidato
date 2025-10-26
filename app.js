@@ -32,7 +32,7 @@ switch(voteType){
     if (voteData.date === today && voteData.count >= 3) {
       toggleSection(2);
     } else {
-      toggleSection(1);
+      toggleSection(2);
     }
     break;
   case 'camara':
@@ -44,7 +44,8 @@ switch(voteType){
     if (voteDataC.date === today && voteDataC.count >= 3) {
       toggleSection(2);
     } else {
-      toggleSection(1);
+      toggleSection(2);
+      // the original code int toggleSection() is 1...
     }
     break;
   case 'senado':
@@ -56,7 +57,7 @@ switch(voteType){
     if (voteDataS.date === today && voteDataS.count >= 3) {
       toggleSection(2);
     } else {
-      toggleSection(1);
+      toggleSection(2);
     }
     break;
 }
